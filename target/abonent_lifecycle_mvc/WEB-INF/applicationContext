@@ -3,26 +3,65 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
     	http://www.springframework.org/schema/beans/spring-beans.xsd
     	http://www.springframework.org/schema/context
     	http://www.springframework.org/schema/context/spring-context.xsd
     	http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="com.yegorpriimak.spring.mvc" />
+    <!-- где проходит сканирование и поиск компонентов -->
+    <context:component-scan base-package="com.yegorpriimak.spring.mvc"/>
 
-<!--    поддержка различных преобразований: форматирования, валидации и т.д.-->
+    <!-- добавление поддержки функционала: форматирования, валидации и т.д. -->
     <mvc:annotation-driven/>
 
+    <!-- то как мы будем работать с view, обращение только по имени -->
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/view/" />
-        <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- использовнаие connection pool для соединения с базой -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/my_db?useSSL=false&amp;serverTimezone=UTC"/>
+        <property name="user" value="bestuser"/>
+        <property name="password" value="bestuser"/>
+    </bean>
+
+    <!-- чтобы получать сессии, для подключения к базе -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- для связи таблицы с классом -->
+        <property name="packagesToScan" value="com.yegorpriimak.spring.mvc.entity"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!-- чтобы видеть в output какие SQL стейтменты выполняются -->
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- чтобы не открывать/закрывать транзакцию вручную и использовать @Transactional -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
 </beans>
+
 
 
 
