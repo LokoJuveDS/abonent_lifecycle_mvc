@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SubscriberDAO {
     public List<Subscriber> getAllSubscribers();
+
+    public void saveSubscriber(Subscriber subscriber);
 }

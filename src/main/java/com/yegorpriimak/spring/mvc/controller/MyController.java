@@ -6,6 +6,7 @@ import com.yegorpriimak.spring.mvc.service.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -21,5 +22,18 @@ public class MyController {
         List<Subscriber> allSubscribers = subscriberService.getAllSubscribers();
         model.addAttribute("allSubs", allSubscribers);
         return "all-subscribers";
+    }
+
+    @RequestMapping("/addNewSubscriber")
+    public String addNewSubscriber(Model model) {
+        Subscriber subscriber = new Subscriber();
+        model.addAttribute("subscriber", subscriber);
+        return "subscriber-info";
+    }
+
+    @RequestMapping("/saveSubscriber")
+    public String saveSubscriber(@ModelAttribute("subscriber") Subscriber subscriber) {
+        subscriberService.saveSubscriber(subscriber);
+        return "redirect:/";
     }
 }

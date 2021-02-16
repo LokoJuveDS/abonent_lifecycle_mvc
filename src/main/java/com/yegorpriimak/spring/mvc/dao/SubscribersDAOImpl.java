@@ -23,4 +23,10 @@ public class SubscribersDAOImpl implements SubscriberDAO {
         List<Subscriber> allSubscribers = session.createQuery("from Subscriber", Subscriber.class).getResultList();
         return allSubscribers;
     }
+
+    @Override
+    public void saveSubscriber(Subscriber subscriber) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(subscriber);
+    }
 }

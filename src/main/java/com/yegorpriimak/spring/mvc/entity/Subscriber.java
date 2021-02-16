@@ -57,8 +57,12 @@ public class Subscriber {
     }
 
     public String getMsisdn() {
-        String phoneNumber = msisdn.replaceFirst("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})", "+$1 ($2) $3-$4-$5");
-        return phoneNumber;
+        if (msisdn == null) {
+            return msisdn;
+        } else {
+            String phoneNumber = msisdn.replaceFirst("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})", "+$1 ($2) $3-$4-$5");
+            return phoneNumber;
+        }
     }
 
     public void setMsisdn(String msisdn) {

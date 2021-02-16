@@ -19,4 +19,10 @@ public class SubscriberServiceImpl implements SubscriberService {
     public List<Subscriber> getAllSubscribers() {
         return subscriberDAO.getAllSubscribers();
     }
+
+    @Override
+    @Transactional
+    public void saveSubscriber(Subscriber subscriber) {
+        subscriberDAO.saveSubscriber(subscriber);
+    }
 }

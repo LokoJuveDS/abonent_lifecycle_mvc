@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SubscriberService {
     public List<Subscriber> getAllSubscribers();
+
+    public void saveSubscriber(Subscriber subscriber);
 }
