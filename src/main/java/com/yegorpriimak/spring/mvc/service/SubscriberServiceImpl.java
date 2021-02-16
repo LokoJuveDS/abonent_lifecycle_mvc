@@ -25,4 +25,16 @@ public class SubscriberServiceImpl implements SubscriberService {
     public void saveSubscriber(Subscriber subscriber) {
         subscriberDAO.saveSubscriber(subscriber);
     }
+
+    @Override
+    @Transactional
+    public Subscriber getSubscriber(int id) {
+        return subscriberDAO.getSubscriber(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSubscriber(int id) {
+        subscriberDAO.deleteSubscriber(id);
+    }
 }

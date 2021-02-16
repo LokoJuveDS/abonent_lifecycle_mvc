@@ -7,6 +7,8 @@
 
 <form:form action="saveSubscriber" modelAttribute="subscriber">
 
+    <form:hidden path="id"/>
+
     First Name <form:input path="firstName"/>
     <br><br>
     Last Name <form:input path="lastName"/>

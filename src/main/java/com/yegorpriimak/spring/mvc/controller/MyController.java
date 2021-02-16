@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -34,6 +35,19 @@ public class MyController {
     @RequestMapping("/saveSubscriber")
     public String saveSubscriber(@ModelAttribute("subscriber") Subscriber subscriber) {
         subscriberService.saveSubscriber(subscriber);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/updateInfo")
+    public String updateSubscriber(@RequestParam("subId") int id, Model model) {
+        Subscriber subscriber = subscriberService.getSubscriber(id);
+        model.addAttribute("subscriber", subscriber);
+        return "subscriber-info";
+    }
+
+    @RequestMapping("/deleteSubscriber")
+    public String deleteSubscriber(@RequestParam("subId") int id) {
+        subscriberService.deleteSubscriber(id);
         return "redirect:/";
     }
 }

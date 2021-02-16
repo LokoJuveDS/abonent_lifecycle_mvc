@@ -8,4 +8,8 @@ public interface SubscriberDAO {
     public List<Subscriber> getAllSubscribers();
 
     public void saveSubscriber(Subscriber subscriber);
+
+    public Subscriber getSubscriber(int id);
+
+    public void deleteSubscriber(int id);
 }
