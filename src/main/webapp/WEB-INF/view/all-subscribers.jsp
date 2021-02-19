@@ -12,9 +12,15 @@
         <th>Balance</th>
         <th>Status</th>
         <th>Operations</th>
+        <th>Admin functions</th>
+
     </tr>
 
     <c:forEach var="sub" items="${allSubs}">
+
+        <c:url var="refillButton" value="/refillBalance">
+            <c:param name="subId" value="${sub.id}"/>
+        </c:url>
 
         <c:url var="updateButton" value="/updateInfo">
             <c:param name="subId" value="${sub.id}"/>
@@ -24,6 +30,7 @@
             <c:param name="subId" value="${sub.id}"/>
         </c:url>
 
+
         <tr>
             <td>${sub.firstName}</td>
             <td>${sub.lastName}</td>
@@ -31,12 +38,17 @@
             <td>${sub.balance}</td>
             <td>${sub.status}</td>
             <td>
+                <input type="button" value="Refill"
+                       onclick="window.location.href = '${refillButton}'"/>
+            </td>
+            <td>
                 <input type="button" value="Update"
                        onclick="window.location.href='${updateButton}'"/>
 
                 <input type="button" value="Delete"
                        onclick="window.location.href='${deleteButton}'"/>
             </td>
+
 
         </tr>
 

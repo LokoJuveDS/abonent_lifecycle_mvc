@@ -1,15 +1,16 @@
 package com.yegorpriimak.spring.mvc.controller;
 
-import com.yegorpriimak.spring.mvc.dao.SubscriberDAO;
 import com.yegorpriimak.spring.mvc.entity.Subscriber;
 import com.yegorpriimak.spring.mvc.service.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -33,9 +34,20 @@ public class MyController {
     }
 
     @RequestMapping("/saveSubscriber")
-    public String saveSubscriber(@ModelAttribute("subscriber") Subscriber subscriber) {
-        subscriberService.saveSubscriber(subscriber);
-        return "redirect:/";
+    public String saveSubscriber(@Valid @ModelAttribute("subscriber") Subscriber subscriber, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "subscriber-info";
+        } else {
+            subscriberService.saveSubscriber(subscriber);
+            return "redirect:/";
+        }
+    }
+
+    @RequestMapping("/refillBalance")
+    public String refillBalance(@RequestParam("subId") int id, Model model) {
+        Subscriber subscriber = subscriberService.getSubscriber(id);
+        model.addAttribute("subscriber", subscriber);
+        return "refill-balance";
     }
 
     @RequestMapping("/updateInfo")

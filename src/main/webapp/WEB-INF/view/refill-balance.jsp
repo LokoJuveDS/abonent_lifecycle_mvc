@@ -2,25 +2,25 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Subscriber info</h2>
+<h2>Refill balance</h2>
 <br>
 
 <form:form action="saveSubscriber" modelAttribute="subscriber">
 
     <form:hidden path="id"/>
 
-    First Name: <form:input path="firstName"/>
-    <form:errors path="firstName"/>
+    First Name: ${subscriber.firstName} <form:hidden path="firstName"/>
     <br><br>
-    Last Name: <form:input path="lastName"/>
+    Last Name: ${subscriber.lastName} <form:hidden path="lastName"/>
     <br><br>
-    Phone Number: <form:input path="msisdn"/>
+    Phone Number: ${subscriber.msisdn} <form:hidden path="msisdn"/>
     <br><br>
     Balance: <form:input path="balance"/>
     <br><br>
     Status: ${subscriber.status} <form:hidden path="status"/>
     <br><br>
     <input type="submit" value="OK">
+
 
 </form:form>
 </body>

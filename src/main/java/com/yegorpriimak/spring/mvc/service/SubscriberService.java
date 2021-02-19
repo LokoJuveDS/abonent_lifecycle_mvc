@@ -12,4 +12,5 @@ public interface SubscriberService {
     public Subscriber getSubscriber(int id);
 
     public void deleteSubscriber(int id);
+
 }

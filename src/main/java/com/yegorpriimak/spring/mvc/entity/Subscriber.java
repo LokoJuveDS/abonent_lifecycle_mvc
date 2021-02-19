@@ -1,6 +1,8 @@
 package com.yegorpriimak.spring.mvc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.text.DecimalFormat;
 
 @Entity
@@ -11,12 +13,19 @@ public class Subscriber {
     @Column(name = "id")
     private int id;
     @Column(name = "first_name")
+    @Size(min = 2, max = 15, message = "first name must be between 2 and 15 symbols")
+    @NotBlank(message = "first name is required field")
     private String firstName;
     @Column(name = "last_name")
+    @Size(min = 2, max = 25, message = "last name must be between 2 and 25 symbols")
+    @NotBlank(message = "last name is required field")
     private String lastName;
     @Column(name = "msisdn")
+    @Size(min = 11, max = 11, message = "phone number must be 11 symbols")
+    @NotBlank(message = "phone number is required field")
     private String msisdn;
     @Column(name = "balance")
+    @NotBlank(message = "balance is required field")
     private double balance;
     @Column(name = "status")
     private boolean status;
@@ -62,11 +71,12 @@ public class Subscriber {
         } else {
             String phoneNumber = msisdn.replaceFirst("(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d{2})", "+$1 ($2) $3-$4-$5");
             return phoneNumber;
+//            return msisdn;
         }
     }
 
     public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
+        this.msisdn = msisdn.replaceAll("[^0-9]", "");
     }
 
     public double getBalance() {
@@ -82,6 +92,10 @@ public class Subscriber {
     }
 
     public void setStatus(boolean status) {
-        this.status = status;
+        if (this.balance >= 0) {
+            this.status = true;
+        } else {
+            this.status = false;
+        }
     }
 }
