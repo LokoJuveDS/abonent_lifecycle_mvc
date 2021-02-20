@@ -36,7 +36,7 @@
             <td>${sub.lastName}</td>
             <td>${sub.msisdn}</td>
             <td>${sub.balance}</td>
-            <td>${sub.status}</td>
+            <td>${sub.status ? 'Active':'Blocked'}</td>
             <td>
                 <input type="button" value="Refill"
                        onclick="window.location.href = '${refillButton}'"/>

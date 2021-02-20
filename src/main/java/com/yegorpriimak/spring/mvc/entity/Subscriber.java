@@ -25,7 +25,6 @@ public class Subscriber {
     @NotBlank(message = "phone number is required field")
     private String msisdn;
     @Column(name = "balance")
-    @NotBlank(message = "balance is required field")
     private double balance;
     @Column(name = "status")
     private boolean status;
