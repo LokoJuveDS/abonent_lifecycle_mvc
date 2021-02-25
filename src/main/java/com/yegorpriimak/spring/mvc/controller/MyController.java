@@ -12,12 +12,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/api")
 public class MyController {
 
     @Autowired
     private SubscriberService subscriberService;
 
-    @RequestMapping("/")
+    @RequestMapping("")
+    public String showFirstView() {
+        return "start-page";
+    }
+
+    @GetMapping("/subscribers")
     public String showAllSubscribers(Model model) {
         List<Subscriber> allSubscribers = subscriberService.getAllSubscribers();
         model.addAttribute("allSubs", allSubscribers);
@@ -31,13 +37,13 @@ public class MyController {
         return "subscriber-info";
     }
 
-    @PostMapping("/saveSubscriber")
+    @PostMapping("/subscribers")
     public String saveSubscriber(@Valid @ModelAttribute("subscriber") Subscriber subscriber, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "subscriber-info";
         } else {
             subscriberService.saveSubscriber(subscriber);
-            return "redirect:/";
+            return "start-page";
         }
     }
 
@@ -55,9 +61,9 @@ public class MyController {
         return "subscriber-info";
     }
 
-    @RequestMapping("/deleteSubscriber")
-    public String deleteSubscriber(@RequestParam("subId") int id) {
+    @DeleteMapping("/subscribers/{id}")
+    public String deleteSubscriber(@PathVariable int id) {
         subscriberService.deleteSubscriber(id);
-        return "redirect:/";
+        return "start-page";
     }
 }

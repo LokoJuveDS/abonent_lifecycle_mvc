@@ -18,15 +18,15 @@
 
     <c:forEach var="sub" items="${allSubs}">
 
-        <c:url var="refillButton" value="/refillBalance">
+        <c:url var="refillButton" value="/api/refillBalance">
             <c:param name="subId" value="${sub.id}"/>
         </c:url>
 
-        <c:url var="updateButton" value="/updateInfo">
+        <c:url var="updateButton" value="/api/updateInfo">
             <c:param name="subId" value="${sub.id}"/>
         </c:url>
 
-        <c:url var="deleteButton" value="/deleteSubscriber">
+        <c:url var="deleteButton" value="/api/subscribers/{id}">
             <c:param name="subId" value="${sub.id}"/>
         </c:url>
 

@@ -5,7 +5,7 @@
 <h2>Subscriber info</h2>
 <br>
 
-<form:form action="saveSubscriber" modelAttribute="subscriber" method="post">
+<form:form action="subscribers" modelAttribute="subscriber" method="post">
 
     <form:hidden path="id"/>
 
